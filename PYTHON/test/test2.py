@@ -28,7 +28,7 @@ def tokenizer(raw, pos=["Noun","Alpha","Verb","Number"], stopword=[]):
 
 
 
-file = open('./test2.txt','r',encoding='utf-8')
+file = open('./mujung.txt','r',encoding='utf-8')
 lines = file.readlines()
 
 # 2. 변수 rawdata 저장
@@ -71,7 +71,7 @@ print(X.toarray())
 features = vectorize.get_feature_names()
 
 # 검색 문장에서 feature를 뽑아냄
-srch=[t for t in tokenizer('젊은 느티나무') if t in features]
+srch=[t for t in tokenizer('형식') if t in features]
 print(srch)
 # ['1987', '대통령']
  

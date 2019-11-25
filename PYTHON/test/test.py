@@ -4,7 +4,7 @@ from konlpy.utils import pprint
 from konlpy.tag import Twitter
 
 # 1. 이전 포스트에서 크롤링한 댓글파일을 읽기전용으로 호출함
-file = open('./test2.txt','r',encoding='utf-8')
+file = open('./mujung.txt','r',encoding='utf-8')
 lines = file.readlines()
 
 # 2. 변수 okja에 전체댓글을 다시저장
@@ -28,7 +28,7 @@ print(len(sentences_tag))
 print('\n'*3)
 
 # 5. 명사 혹은 형용사인 품사만 선별해 리스트에 담기
-noun_adj_list = []
+noun_adj_list = [] 
 for sentence1 in sentences_tag:
     for word, tag in sentence1:
         if tag in ['Noun','Adjective']:
