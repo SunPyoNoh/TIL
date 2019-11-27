@@ -6,24 +6,15 @@ from konlpy.corpus import kolaw
 from konlpy.utils import pprint
  
 # this is a very toy example, do not try this at home unless you want to understand the usage differences
-docs=[]
+file = open('./mujung.txt','r',encoding='utf-8')
+lines = file.readlines()
 
-file=open('./test2.txt','r')
-
-while (1):
-    line=file.readline()
-
-    try:escape=line.index('\n')
-    except:escape=len(line)
-    
-    if line:
-        docs.append(line[0:escape])
-    else:
-        break
-    
+# 2. 변수 okja에 전체댓글을 다시저장
+docs = []
+for line in lines:
+    docs.append(line)
 file.close()
 
-print(docs)
 
 # docs = kolaw.open('./test2.txt').read()
 
@@ -52,7 +43,7 @@ tfidf_transformer.fit(word_count_vector)
 df_idf = pd.DataFrame(tfidf_transformer.idf_, index=cv.get_feature_names(),columns=["idf_weights"])
  
 # sort ascending
-# pprint(df_idf.sort_values(by=['idf_weights']))
+pprint(df_idf.sort_values(by=['idf_weights']))
 
 
 
@@ -69,26 +60,26 @@ first_document_vector=tf_idf_vector[0]
  
 #print the scores
 df = pd.DataFrame(first_document_vector.T.todense(), index=feature_names, columns=["tfidf"])
-df.sort_values(by=["tfidf"],ascending=False)
+pprint(df.sort_values(by=["tfidf"],ascending=False))
  
  
-from sklearn.feature_extraction.text import TfidfVectorizer 
+# from sklearn.feature_extraction.text import TfidfVectorizer 
  
-# settings that you use for count vectorizer will go here
-tfidf_vectorizer=TfidfVectorizer(use_idf=True)
+# # settings that you use for count vectorizer will go here
+# tfidf_vectorizer=TfidfVectorizer(use_idf=True)
  
-# just send in all your docs here
-tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(docs)
+# # just send in all your docs here
+# tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(docs)
 
-# get the first vector out (for the first document)
-first_vector_tfidfvectorizer=tfidf_vectorizer_vectors[0]
+# # get the first vector out (for the first document)
+# first_vector_tfidfvectorizer=tfidf_vectorizer_vectors[0]
  
-# place tf-idf values in a pandas data frame
-df = pd.DataFrame(first_vector_tfidfvectorizer.T.todense(), index=tfidf_vectorizer.get_feature_names(), columns=["tfidf"])
-df.sort_values(by=["tfidf"],ascending=False)
+# # place tf-idf values in a pandas data frame
+# df = pd.DataFrame(first_vector_tfidfvectorizer.T.todense(), index=tfidf_vectorizer.get_feature_names(), columns=["tfidf"])
+# df.sort_values(by=["tfidf"],ascending=False)
 
-tfidf_vectorizer=TfidfVectorizer(use_idf=True)
+# tfidf_vectorizer=TfidfVectorizer(use_idf=True)
  
-# just send in all your docs here
-fitted_vectorizer=tfidf_vectorizer.fit(docs)
-tfidf_vectorizer_vectors=fitted_vectorizer.transform(docs)
+# # just send in all your docs here
+# fitted_vectorizer=tfidf_vectorizer.fit(docs)
+# tfidf_vectorizer_vectors=fitted_vectorizer.transform(docs)
