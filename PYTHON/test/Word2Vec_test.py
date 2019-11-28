@@ -34,16 +34,16 @@ print(len(sentences_tag))
 print('\n'*3)
 
 # 5. 명사 혹은 형용사인 품사만 선별해 리스트에 담기
-sentence = [] 
-for sentence1 in sentences_tag:
-    for word, tag in sentence1:
-        if tag in ['Noun','Adjective']:
-            sentence.append(word)
+# sentence = [] 
+# for sentence1 in sentences_tag:
+#     for word, tag in sentence1:
+#         if tag in ['Noun','Adjective']:
+#             sentence.append(word)
 
 
 # 6. 선별된 품사별 빈도수 계산 & 상위 빈도 10위 까지 출력
-counts = Counter(sentence)
-print(counts.most_common(10))
+# counts = Counter(sentence)
+# print(counts.most_common(10))
 
 
 

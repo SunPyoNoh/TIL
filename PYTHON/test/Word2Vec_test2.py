@@ -5,11 +5,14 @@ from konlpy.tag import Twitter
 from konlpy.tag import Komoran
 from gensim.models import Word2Vec
 import matplotlib.pyplot as plt
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+import string
 
 # 1. 이전 포스트에서 크롤링한 댓글파일을 읽기전용으로 호출함
 file = open('./test.txt','r',encoding='utf-8')
 lines = file.readlines()
-lines = lines.sub(r'\([^)]*\)', '', parse_text)
 # 2. 변수 okja에 전체댓글을 다시저장
 okja = []
 for line in lines:
@@ -23,11 +26,12 @@ sentences_tag = []
 for sentence in okja:
     morph = twitter.pos(sentence)
     sentences_tag.append(morph)
-    print(morph)
-    print('-'*30)
+    # print(morph)
+    # print('-'*30)
 
-print(sentences_tag)
-print(len(sentences_tag))
+
+# print(sentences_tag)
+# print(len(sentences_tag))
 print('\n'*3)
 
 # 5. 명사 혹은 형용사인 품사만 선별해 리스트에 담기
@@ -38,9 +42,21 @@ for sentence1 in sentences_tag:
             noun_adj_list.append(word)
 
 
-print(type(sentences_tag[1]))
-print(sentences_tag[11])
-
 # 6. 선별된 품사별 빈도수 계산 & 상위 빈도 10위 까지 출력
 counts = Counter(noun_adj_list)
 print(counts.most_common(10))
+
+nltk.download('punkt')
+word_tokens = word_tokenize(noun_adj_list)
+result = []
+for w in word_tokens:
+    if w not in stop_words:
+        result.append(w)
+
+# window크기 5, 최소 출현수 2, skip-gram, 10000번 학습
+model = Word2Vec(counts,window = 5,min_count=2,sg=1,iter=10000)
+
+print(list(model.wv.vocab.keys()))
+print("vocab length : %d"%len(model.wv.vocab))
+
+print(model.wv.most_similar("범"))
