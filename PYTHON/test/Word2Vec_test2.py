@@ -4,14 +4,13 @@ from konlpy.utils import pprint
 from konlpy.tag import Twitter
 from konlpy.tag import Komoran
 from gensim.models import Word2Vec
-import matplotlib.pyplot as plt
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
 
 # 1. 이전 포스트에서 크롤링한 댓글파일을 읽기전용으로 호출함
-file = open('./test.txt','r',encoding='utf-8')
+file = open('./test4.txt','r',encoding='utf-8')
 lines = file.readlines()
 # 2. 변수 okja에 전체댓글을 다시저장
 okja = []
@@ -46,17 +45,11 @@ for sentence1 in sentences_tag:
 counts = Counter(noun_adj_list)
 print(counts.most_common(10))
 
-nltk.download('punkt')
-word_tokens = word_tokenize(noun_adj_list)
-result = []
-for w in word_tokens:
-    if w not in stop_words:
-        result.append(w)
-
 # window크기 5, 최소 출현수 2, skip-gram, 10000번 학습
-model = Word2Vec(counts,window = 5,min_count=2,sg=1,iter=10000)
+model = Word2Vec(noun_adj_list,size=200,window=10,hs=1,min_count=2,sg=1)
+
 
 print(list(model.wv.vocab.keys()))
 print("vocab length : %d"%len(model.wv.vocab))
 
-print(model.wv.most_similar("범"))
+print(model.wv.most_similar("몰라"))
